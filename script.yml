@@ -1,0 +1,29 @@
+- hosts: all
+  become: true
+  tasks:
+
+#update and upgrade servers
+  - name: update cache
+    apt:
+      update_cache: yes
+
+#install apache2
+  - name: install apache2
+    apt:
+      name: apache2
+      state: latest 
+
+#set time zone
+  - name: set timezone to Africa/Lagos
+    timezone: 
+      name=Africa/Lagos
+
+#print hostname
+  - name: print hostname on server
+    shell: echo "<h3>Hello, This is $(hostname -f) and the date is $(date)</h3>" > /var/www/html/index.html
+
+#restart apache2
+  - name: restart apache2
+    service:
+      name: apache2
+      state: restarted
